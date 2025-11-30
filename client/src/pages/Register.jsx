@@ -16,10 +16,12 @@ export default function Register() {
     });
 
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+        setLoading(true);
 
         try {
             const res = await axiosInstance.post("/auth/register", form);
@@ -32,6 +34,8 @@ export default function Register() {
                 "Registration failed. Please try again.";
 
             setError(msg);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -92,8 +96,7 @@ export default function Register() {
                                    placeholder-slate-300 outline-none border border-white/20
                                    focus:border-indigo-400 transition"
                         onChange={(e) =>
-                            setForm({ ...form, email: e.target.value })
-                        }
+                            setForm({ ...form, email: e.target.value })}
                     />
                 </div>
 
@@ -108,8 +111,7 @@ export default function Register() {
                                    placeholder-slate-300 outline-none border border-white/20
                                    focus:border-purple-400 transition"
                         onChange={(e) =>
-                            setForm({ ...form, password: e.target.value })
-                        }
+                            setForm({ ...form, password: e.target.value })}
                     />
                 </div>
 
@@ -121,23 +123,27 @@ export default function Register() {
                                    outline-none border border-white/20
                                    focus:border-indigo-400 transition cursor-pointer"
                         onChange={(e) =>
-                            setForm({ ...form, role: e.target.value })
-                        }
+                            setForm({ ...form, role: e.target.value })}
                     >
                         <option value="user" className="text-black">User</option>
                         <option value="admin" className="text-black">Admin</option>
                     </select>
                 </div>
 
-                {/* Register Button */}
+                {/* Register Button with Loader */}
                 <button
                     type="submit"
-                    className="w-full py-3 rounded-lg 
-                               bg-linear-to-r from-indigo-500 to-purple-500 
-                               text-white font-semibold tracking-wide
-                               shadow-lg hover:opacity-90 transition active:scale-95"
+                    disabled={loading}
+                    className={`w-full py-3 rounded-lg flex items-center justify-center gap-3
+                               bg-gradient-to-r from-indigo-500 to-purple-500 
+                               text-white font-semibold tracking-wide shadow-lg 
+                               transition active:scale-95
+                               ${loading ? "opacity-70 cursor-not-allowed" : "hover:opacity-90"}`}
                 >
-                    Register
+                    {loading && (
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    )}
+                    {loading ? "Creating account..." : "Register"}
                 </button>
 
                 {/* Login Link */}

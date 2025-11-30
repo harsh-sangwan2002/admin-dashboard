@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "../redux/store";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8000/api",
+    baseURL: "https://admin-dashboard-9u1r.onrender.com/api",
 });
 
 axiosInstance.interceptors.request.use((config) => {

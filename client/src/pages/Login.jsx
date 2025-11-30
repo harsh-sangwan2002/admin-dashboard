@@ -9,10 +9,12 @@ export default function Login() {
     const dispatch = useDispatch();
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(""); // clear previous errors
+        setError("");
+        setLoading(true);
 
         try {
             const res = await axiosInstance.post("/auth/login", form);
@@ -27,6 +29,8 @@ export default function Login() {
                 "Login failed. Please try again.";
 
             setError(msg);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -92,15 +96,20 @@ export default function Login() {
                     />
                 </div>
 
-                {/* Login Button */}
+                {/* Login Button with Loader */}
                 <button
                     type="submit"
-                    className="w-full py-3 rounded-lg 
+                    disabled={loading}
+                    className={`w-full py-3 rounded-lg flex items-center justify-center gap-3
                                bg-linear-to-r from-indigo-500 to-purple-500 
-                               text-white font-semibold tracking-wide
-                               shadow-lg hover:opacity-90 transition active:scale-95"
+                               text-white font-semibold tracking-wide shadow-lg 
+                               transition active:scale-95
+                               ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:opacity-90'}`}
                 >
-                    Login
+                    {loading && (
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    )}
+                    {loading ? "Logging in..." : "Login"}
                 </button>
 
                 {/* Extra */}
