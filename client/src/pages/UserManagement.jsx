@@ -26,7 +26,7 @@ export default function UserManagement() {
     }, []);
 
     return (
-        <div className="min-h-screen p-10 text-white bg-gradient-to-br
+        <div className="min-h-screen p-10 text-white bg-linear-to-br
                         from-slate-900 via-indigo-900 to-purple-900">
 
             {/* BACK BUTTON */}

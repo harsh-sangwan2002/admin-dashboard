@@ -135,7 +135,7 @@ export default function Register() {
                     type="submit"
                     disabled={loading}
                     className={`w-full py-3 rounded-lg flex items-center justify-center gap-3
-                               bg-gradient-to-r from-indigo-500 to-purple-500 
+                               bg-linear-to-r from-indigo-500 to-purple-500 
                                text-white font-semibold tracking-wide shadow-lg 
                                transition active:scale-95
                                ${loading ? "opacity-70 cursor-not-allowed" : "hover:opacity-90"}`}
